@@ -25,6 +25,21 @@ app.get('/bands', (req, res) => {
     res.json(bands);
 });
 
+// Create new band - POST
+app.post('/bands', (req, res) => {
+    console.log(req.body);
+
+    const name = req.body.name;
+    const genre = req.body.genre;
+
+    const statement = db.prepare('INSERT INTO bands (name, genre) VALUES (?, ?)');
+    const result = statement.run(name, genre);
+
+    //return result
+    res.json(result);
+
+    });
+
 // Get one
 app.get('/bands/:id', (req, res) => {
     // Get single band
@@ -35,5 +50,5 @@ app.get('/bands/:id', (req, res) => {
 
 });
 
-
-;
+app.listen(3000, () => {console.log('Server started on port 3000')
+});
